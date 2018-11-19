@@ -26,7 +26,7 @@ import java.util.UUID;
 /**
  * A delegate class doing the heavy lifting for the plugin.
  *
- * <p>When invoked, both the {@link #chooseImageFromGallery} and {@link #takeImageWithCamera}
+ * <p>When invoked, both the {@link #chooseImageFromGallery}
  * methods go through the same steps:
  *
  * <p>1. Check for an existing {@link #pendingResult}. If a previous pendingResult exists, this
@@ -66,13 +66,13 @@ public class ImagePickerDelegate
     implements PluginRegistry.ActivityResultListener,
         PluginRegistry.RequestPermissionsResultListener {
   @VisibleForTesting static final int REQUEST_CODE_CHOOSE_IMAGE_FROM_GALLERY = 2342;
-  @VisibleForTesting static final int REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA = 2343;
+  //@VisibleForTesting static final int REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA = 2343;
   @VisibleForTesting static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION = 2344;
-  @VisibleForTesting static final int REQUEST_CAMERA_IMAGE_PERMISSION = 2345;
+  //@VisibleForTesting static final int REQUEST_CAMERA_IMAGE_PERMISSION = 2345;
   @VisibleForTesting static final int REQUEST_CODE_CHOOSE_VIDEO_FROM_GALLERY = 2352;
-  @VisibleForTesting static final int REQUEST_CODE_TAKE_VIDEO_WITH_CAMERA = 2353;
+  //@VisibleForTesting static final int REQUEST_CODE_TAKE_VIDEO_WITH_CAMERA = 2353;
   @VisibleForTesting static final int REQUEST_EXTERNAL_VIDEO_STORAGE_PERMISSION = 2354;
-  @VisibleForTesting static final int REQUEST_CAMERA_VIDEO_PERMISSION = 2355;
+ // @VisibleForTesting static final int REQUEST_CAMERA_VIDEO_PERMISSION = 2355;
 
   @VisibleForTesting final String fileProviderName;
 
@@ -206,7 +206,7 @@ public class ImagePickerDelegate
     activity.startActivityForResult(pickVideoIntent, REQUEST_CODE_CHOOSE_VIDEO_FROM_GALLERY);
   }
 
-  public void takeVideoWithCamera(MethodCall methodCall, MethodChannel.Result result) {
+  /*public void takeVideoWithCamera(MethodCall methodCall, MethodChannel.Result result) {
     if (!setPendingMethodCallAndResult(methodCall, result)) {
       finishWithAlreadyActiveError();
       return;
@@ -219,9 +219,9 @@ public class ImagePickerDelegate
     }
 
     launchTakeVideoWithCameraIntent();
-  }
+  }*/
 
-  private void launchTakeVideoWithCameraIntent() {
+  /*private void launchTakeVideoWithCameraIntent() {
     Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
     boolean canTakePhotos = intentResolver.resolveActivity(intent);
 
@@ -238,7 +238,7 @@ public class ImagePickerDelegate
     grantUriPermissions(intent, videoUri);
 
     activity.startActivityForResult(intent, REQUEST_CODE_TAKE_VIDEO_WITH_CAMERA);
-  }
+  }*/
 
   public void chooseImageFromGallery(MethodCall methodCall, MethodChannel.Result result) {
     if (!setPendingMethodCallAndResult(methodCall, result)) {
@@ -262,7 +262,7 @@ public class ImagePickerDelegate
     activity.startActivityForResult(pickImageIntent, REQUEST_CODE_CHOOSE_IMAGE_FROM_GALLERY);
   }
 
-  public void takeImageWithCamera(MethodCall methodCall, MethodChannel.Result result) {
+  /*public void takeImageWithCamera(MethodCall methodCall, MethodChannel.Result result) {
     if (!setPendingMethodCallAndResult(methodCall, result)) {
       finishWithAlreadyActiveError();
       return;
@@ -275,9 +275,9 @@ public class ImagePickerDelegate
     }
 
     launchTakeImageWithCameraIntent();
-  }
+  }*/
 
-  private void launchTakeImageWithCameraIntent() {
+  /*private void launchTakeImageWithCameraIntent() {
     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     boolean canTakePhotos = intentResolver.resolveActivity(intent);
 
@@ -294,7 +294,7 @@ public class ImagePickerDelegate
     grantUriPermissions(intent, imageUri);
 
     activity.startActivityForResult(intent, REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA);
-  }
+  }*/
 
   private File createTemporaryWritableImageFile() {
     return createTemporaryWritableFile(".jpg");
@@ -347,7 +347,7 @@ public class ImagePickerDelegate
           launchPickVideoFromGalleryIntent();
         }
         break;
-      case REQUEST_CAMERA_IMAGE_PERMISSION:
+      /*case REQUEST_CAMERA_IMAGE_PERMISSION:
         if (permissionGranted) {
           launchTakeImageWithCameraIntent();
         }
@@ -356,13 +356,13 @@ public class ImagePickerDelegate
         if (permissionGranted) {
           launchTakeVideoWithCameraIntent();
         }
-        break;
+        break;*/
       default:
         return false;
     }
 
     if (!permissionGranted) {
-      finishWithSuccess(null);
+      finishWithSuccess("-1");
     }
 
     return true;
@@ -374,15 +374,15 @@ public class ImagePickerDelegate
       case REQUEST_CODE_CHOOSE_IMAGE_FROM_GALLERY:
         handleChooseImageResult(resultCode, data);
         break;
-      case REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA:
+      /*case REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA:
         handleCaptureImageResult(resultCode);
-        break;
+        break;*/
       case REQUEST_CODE_CHOOSE_VIDEO_FROM_GALLERY:
         handleChooseVideoResult(resultCode, data);
         break;
-      case REQUEST_CODE_TAKE_VIDEO_WITH_CAMERA:
+      /*case REQUEST_CODE_TAKE_VIDEO_WITH_CAMERA:
         handleCaptureVideoResult(resultCode);
-        break;
+        break;*/
       default:
         return false;
     }

@@ -58,17 +58,20 @@ class FileUtils {
         if ("primary".equalsIgnoreCase(type)) {
           return Environment.getExternalStorageDirectory() + "/" + split[1];
         }
-      } else if (isDownloadsDocument(uri)) {
+      } else if (isDownloadsDocument(uri)) { // https://github.com/flutter/flutter/issues/21863#issuecomment-435544682
         final String id = DocumentsContract.getDocumentId(uri);
 
         if (!TextUtils.isEmpty(id)) {
+          if (id.startsWith("raw:")) {
+            return id.replaceFirst("raw:", "");
+          }
           try {
             final Uri contentUri =
-                ContentUris.withAppendedId(
-                    Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                    ContentUris.withAppendedId(
+                            Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
             return getDataColumn(context, contentUri, null, null);
-          } catch (NumberFormatException e) {
-            return null;
+          } catch (Exception e) {
+            // Do nothing, try something else
           }
         }
 
