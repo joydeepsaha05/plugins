@@ -125,7 +125,7 @@ public class FileUtils {
         return "com.google.android.apps.photos.contentprovider".equals(uri.getAuthority());
     }
 
-    String getPathFromUri(final Context context, final Uri uri) {
+    public String getPathFromUri(final Context context, final Uri uri) {
         String path = getPathFromLocalUri(context, uri);
         if (path == null) {
             path = getPathFromRemoteUri(context, uri);
