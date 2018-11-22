@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class FileUtils {
+public class FileUtils {
 
     private static final String DOCUMENTS_DIR = "documents";
 
